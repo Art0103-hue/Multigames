@@ -1,13 +1,13 @@
 // ==================== QUESTIONS DATABASE ====================
 const questionsDB = [
     {
-        question: "Qual desses grupos de K-Pop e da 4a geracao?",
+        question: "Qual desses grupos de K-Pop é da 4ª geração?",
         options: ["BTS", "BLACKPINK", "SEVENTEEN", "Stray Kids"],
         correct: 3
     },
     {
-        question: "Em qual circulo do Inferno de Dante ficam os glutoes?",
-        options: ["Limbo", "Segundo Circulo", "Terceiro Circulo", "Quinto Circulo"],
+        question: "Em qual círculo do Inferno de Dante ficam os glutões?",
+        options: ["Limbo", "Segundo Círculo", "Terceiro Círculo", "Nono Círculo"],
         correct: 2
     },
     {
@@ -17,12 +17,12 @@ const questionsDB = [
     },
     {
         question: "Em 'A Metamorfose', de Franz Kafka, em que Gregor Samsa se transforma?",
-        options: ["Em um rato", "Em uma barata", "Em um passaro", "Em um inseto alado"],
+        options: ["Em um rato", "Em uma barata", "Em um pássaro", "Em um inseto alado"],
         correct: 1
     },
     {
-        question: "Qual e o maior planeta do Sistema Solar?",
-        options: ["Saturno", "Netuno", "Jupiter", "Urano"],
+        question: "Qual é o maior planeta do Sistema Solar?",
+        options: ["Saturno", "Netuno", "Júpiter", "Urano"],
         correct: 2
     },
     {
@@ -31,27 +31,27 @@ const questionsDB = [
         correct: 1
     },
     {
-        question: "Qual e o elemento quimico com simbolo 'O'?",
-        options: ["Ouro", "Osmio", "Oxigenio", "Ouro Branco"],
+        question: "Qual é o elemento químico com símbolo 'O'?",
+        options: ["Ouro", "Osmío", "Oxigênio", "Ouro Branco"],
         correct: 2
     },
     {
-        question: "Em que ano o Brasil declarou independencia?",
+        question: "Em que ano o Brasil declarou independência?",
         options: ["1808", "1815", "1822", "1889"],
         correct: 2
     },
     {
-        question: "Qual e a capital da Australia?",
+        question: "Qual é a capital da Austrália?",
         options: ["Sydney", "Melbourne", "Camberra", "Brisbane"],
         correct: 2
     },
     {
         question: "Qual livro foi escrito por George Orwell em 1949?",
-        options: ["A Revolucao dos Bichos", "1984", "Admiravel Mundo Novo", "Fahrenheit 451"],
+        options: ["A Revolução dos Bichos", "1984", "Admirável Mundo Novo", "Fahrenheit 451"],
         correct: 1
     },
     {
-        question: "Qual e o rio mais longo do mundo?",
+        question: "Qual é o rio mais longo do mundo?",
         options: ["Rio Amazonas", "Rio Nilo", "Rio Mississipi", "Rio Yangtze"],
         correct: 1
     },
@@ -61,8 +61,8 @@ const questionsDB = [
         correct: 2
     },
     {
-        question: "Qual e o menor pais do mundo?",
-        options: ["Monaco", "Vaticano", "San Marino", "Liechtenstein"],
+        question: "Qual é o menor país do mundo?",
+        options: ["Mônaco", "Vaticano", "San Marino", "Liechtenstein"],
         correct: 1
     },
     {
@@ -71,8 +71,8 @@ const questionsDB = [
         correct: 1
     },
     {
-        question: "Qual e a lingua mais falada no mundo?",
-        options: ["Ingles", "Espanhol", "Mandarim", "Hindi"],
+        question: "Qual é a língua mais falada no mundo?",
+        options: ["Inglês", "Espanhol", "Mandarim", "Hindi"],
         correct: 2
     }
 ];

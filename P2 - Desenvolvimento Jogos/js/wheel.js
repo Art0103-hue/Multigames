@@ -32,7 +32,7 @@ class SpinWheel {
 
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Draw outer ring
+        // Draw outer decorative ring
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
         ctx.fillStyle = '#3D1B6E';
@@ -46,7 +46,7 @@ class SpinWheel {
             const startAngle = this.currentAngle + i * segmentAngle;
             const endAngle = startAngle + segmentAngle;
 
-            // Draw segment
+            // Draw segment fill
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -57,7 +57,7 @@ class SpinWheel {
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Draw text
+            // Draw segment value text
             ctx.save();
             ctx.translate(centerX, centerY);
             ctx.rotate(startAngle + segmentAngle / 2);
@@ -79,7 +79,7 @@ class SpinWheel {
         ctx.lineWidth = 3;
         ctx.stroke();
 
-        // Draw center dot
+        // Draw center pink dot
         ctx.beginPath();
         ctx.arc(centerX, centerY, 8, 0, 2 * Math.PI);
         ctx.fillStyle = '#FF69B4';
@@ -112,6 +112,7 @@ class SpinWheel {
                 const segmentAngle = (2 * Math.PI) / this.segments.length;
                 let normalizedAngle = this.currentAngle % (2 * Math.PI);
                 if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+                // The pointer is at the top (12 o'clock = -PI/2)
                 let winAngle = (-Math.PI / 2 - normalizedAngle) % (2 * Math.PI);
                 if (winAngle < 0) winAngle += 2 * Math.PI;
                 const winIndex = Math.floor(winAngle / segmentAngle);
@@ -128,5 +129,11 @@ class SpinWheel {
 
     isSpinning() {
         return this.spinning;
+    }
+
+    reset() {
+        this.currentAngle = 0;
+        this.spinning = false;
+        this.draw();
     }
 }

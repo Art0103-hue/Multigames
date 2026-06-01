@@ -12,7 +12,8 @@
         questionPoints: [],
         totalPoints: 0,
         wheel: null,
-        users: JSON.parse(localStorage.getItem('quiz_users') || '[]')
+        users: JSON.parse(localStorage.getItem('quiz_users') || '[]'),
+        transitioning: false
     };
 
     // ==================== DOM ELEMENTS ====================
@@ -54,6 +55,9 @@
 
     // ==================== SCREEN MANAGEMENT ====================
     function showScreen(screenName) {
+        if (state.transitioning) return;
+        state.transitioning = true;
+
         const currentEl = screens[state.currentScreen];
         const nextEl = screens[screenName];
 
@@ -65,6 +69,7 @@
 
             setTimeout(() => {
                 nextEl.classList.remove('fade-in');
+                state.transitioning = false;
             }, 300);
 
             state.currentScreen = screenName;
@@ -89,7 +94,10 @@
         const foundUser = state.users.find(u => u.email === email && u.senha === senha);
         if (foundUser) {
             state.user = foundUser;
-            initGame();
+            showFeedback(true, 'Login realizado com sucesso! Bem-vindo(a), ' + foundUser.nome + '!');
+            setTimeout(() => {
+                initGame();
+            }, 1500);
         } else {
             showFeedback(false, 'Email ou senha incorretos!');
         }
@@ -97,6 +105,10 @@
 
     elements.loginSenha.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') elements.btnLoginSubmit.click();
+    });
+
+    elements.loginEmail.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') elements.loginSenha.focus();
     });
 
     elements.linkRegister.addEventListener('click', () => {
@@ -116,12 +128,12 @@
         }
 
         if (!terms) {
-            showFeedback(false, 'Voce precisa aceitar os Termos de Uso!');
+            showFeedback(false, 'Você precisa aceitar os Termos de Uso!');
             return;
         }
 
         if (state.users.find(u => u.email === email)) {
-            showFeedback(false, 'Este email ja esta cadastrado!');
+            showFeedback(false, 'Este email já está cadastrado!');
             return;
         }
 
@@ -140,6 +152,14 @@
         if (e.key === 'Enter') elements.btnRegisterSubmit.click();
     });
 
+    elements.regEmail.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') elements.regSenha.focus();
+    });
+
+    elements.regNome.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') elements.regEmail.focus();
+    });
+
     // ==================== GAME INITIALIZATION ====================
     function initGame() {
         state.questions = getRandomQuestions();
@@ -153,7 +173,11 @@
     // ==================== WHEEL SCREEN ====================
     function showWheelScreen() {
         showScreen('wheel');
-        if (!state.wheel) {
+
+        // Re-initialize the wheel canvas each time to ensure fresh state
+        if (state.wheel) {
+            state.wheel.reset();
+        } else {
             state.wheel = new SpinWheel('wheel-canvas');
         }
         state.wheel.onSpinComplete = onWheelSpinComplete;
@@ -171,12 +195,12 @@
         state.questionPoints[state.currentQuestion] = value;
 
         if (value === 0) {
-            showFeedback(false, 'Voce tirou 0 pontos! Gire novamente.');
+            showFeedback(false, 'Você tirou 0 pontos! Gire novamente.');
             setTimeout(() => {
                 elements.btnSpin.disabled = false;
             }, 2000);
         } else {
-            showFeedback(true, 'Voce tirou ' + value + ' pontos para a Pergunta ' + (state.currentQuestion + 1) + '!');
+            showFeedback(true, 'Você tirou ' + value + ' pontos para a Pergunta ' + (state.currentQuestion + 1) + '!');
             setTimeout(() => {
                 showScreen('quiz');
                 renderQuestion();
@@ -214,6 +238,7 @@
             option.classList.remove('selected', 'correct', 'wrong');
             option.disabled = false;
 
+            // Restore previously selected answer
             if (state.answers[idx] !== null && state.answers[idx].selected === i) {
                 option.classList.add('selected');
             }
@@ -238,11 +263,14 @@
         const q = state.questions[state.currentQuestion];
         const currentPoints = state.questionPoints[state.currentQuestion] || 0;
 
+        // Remove previous selection
         const options = elements.quizOptions.querySelectorAll('.quiz-option');
         options.forEach(o => o.classList.remove('selected'));
 
+        // Mark as selected
         option.classList.add('selected');
 
+        // Store answer
         state.answers[state.currentQuestion] = {
             selected: idx,
             correct: idx === q.correct,
@@ -279,7 +307,8 @@
         if (!step) return;
 
         const stepIdx = parseInt(step.dataset.step) - 1;
-        if (stepIdx <= state.currentQuestion) {
+        // Only allow navigating to already visited questions
+        if (stepIdx < state.currentQuestion) {
             state.currentQuestion = stepIdx;
             renderQuestion();
         }
@@ -288,11 +317,13 @@
     // ==================== RESULTS ====================
     function showResults() {
         let totalPoints = 0;
+        let correctCount = 0;
         let detailsHTML = '';
 
         state.answers.forEach((answer, i) => {
             if (answer) {
                 totalPoints += answer.points;
+                if (answer.correct) correctCount++;
                 detailsHTML += '<div class="result-item ' + (answer.correct ? 'correct-answer' : 'wrong-answer') + '">' +
                     '<span class="result-question-num">Pergunta ' + (i + 1) + '</span>' +
                     '<span>' + (answer.correct ? 'Correta' : 'Errada') + '</span>' +
@@ -301,7 +332,7 @@
             } else {
                 detailsHTML += '<div class="result-item wrong-answer">' +
                     '<span class="result-question-num">Pergunta ' + (i + 1) + '</span>' +
-                    '<span>Nao respondida</span>' +
+                    '<span>Não respondida</span>' +
                     '<span class="result-points">0 pts</span>' +
                     '</div>';
             }
@@ -312,6 +343,17 @@
         elements.resultDetails.innerHTML = detailsHTML;
 
         showScreen('result');
+
+        // Show summary feedback
+        setTimeout(() => {
+            if (correctCount === 5) {
+                showFeedback(true, 'Perfeito! Você acertou todas as 5 perguntas! Pontuação: ' + totalPoints);
+            } else if (correctCount >= 3) {
+                showFeedback(true, 'Muito bem! Você acertou ' + correctCount + ' de 5 perguntas! Pontuação: ' + totalPoints);
+            } else {
+                showFeedback(false, 'Você acertou ' + correctCount + ' de 5 perguntas. Pontuação: ' + totalPoints);
+            }
+        }, 600);
     }
 
     // Play again
@@ -337,6 +379,13 @@
             elements.feedbackModal.classList.remove('active');
         }
     });
+
+    // ==================== PREVENT DOUBLE-TAP ZOOM ON MOBILE ====================
+    document.addEventListener('touchend', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            e.preventDefault();
+        }
+    }, { passive: false });
 
     // ==================== INIT ====================
     console.log('QU!Z - Jogo de Perguntas inicializado!');
