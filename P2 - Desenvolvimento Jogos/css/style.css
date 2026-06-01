@@ -1,0 +1,344 @@
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #1A0A2E;
+    color: #FFFFFF;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==================== SCREEN MANAGEMENT ==================== */
+.screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* ==================== LOGO ==================== */
+.logo-box {
+    background: #0D0D0D;
+    border-radius: 12px;
+    padding: 12px 30px 8px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.logo-box.small-logo {
+    padding: 8px 20px 4px;
+    margin-bottom: 10px;
+}
+
+.logo-text {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    position: relative;
+    line-height: 1;
+}
+
+.logo-box.small-logo .logo-text {
+    font-size: 32px;
+}
+
+.letter-q {
+    color: #7EC8E3;
+    text-shadow: 2px 2px 0 #4A90A4;
+}
+
+.letter-u {
+    color: #FFFFFF;
+    text-shadow: 2px 2px 0 #AAAAAA;
+}
+
+.letter-i {
+    color: #FF69B4;
+    text-shadow: 2px 2px 0 #B0407A;
+}
+
+.letter-z {
+    color: #9B59B6;
+    text-shadow: 2px 2px 0 #6C3483;
+}
+
+.star {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    color: #FF69B4;
+    font-size: 20px;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+.logo-box.small-logo .star {
+    font-size: 14px;
+    top: -6px;
+    right: -8px;
+}
+
+@keyframes starPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+.question-mark {
+    font-size: 40px;
+    color: #7EC8E3;
+    text-shadow: 2px 2px 0 #4A90A4;
+    line-height: 1;
+    margin-top: -4px;
+    font-weight: 900;
+}
+
+.logo-box.small-logo .question-mark {
+    font-size: 26px;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-enter {
+    background: #6C3483;
+    color: #FFFFFF;
+    border: 2px solid #9B59B6;
+    border-radius: 12px;
+    padding: 14px 60px;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 30px;
+}
+
+.btn-enter:hover {
+    background: #9B59B6;
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(155, 89, 182, 0.5);
+}
+
+.btn-enter:active {
+    transform: scale(0.97);
+}
+
+.btn-arrow-right {
+    background: #FF69B4;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    align-self: flex-end;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.btn-arrow-right:hover {
+    background: #FF85C8;
+    transform: scale(1.08);
+}
+
+.btn-arrow-right:active {
+    transform: scale(0.95);
+}
+
+/* ==================== FORM ELEMENTS ==================== */
+.form-box {
+    background: #2D1B4E;
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 360px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #FFFFFF;
+}
+
+.form-group input {
+    width: 100%;
+    background: #5B3A8C;
+    border: 2px solid #7D5BA6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #B8A0D4;
+}
+
+.form-group input:focus {
+    border-color: #FF69B4;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
+
+/* ==================== LINKS ==================== */
+.link-text {
+    font-size: 14px;
+    color: #B8A0D4;
+    margin-top: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.link-highlight {
+    color: #FF69B4;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* ==================== TERMS CHECKBOX ==================== */
+.terms-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    max-width: 360px;
+    font-size: 13px;
+    color: #D4C1E8;
+    line-height: 1.4;
+}
+
+.terms-check input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-top: 2px;
+    accent-color: #FF69B4;
+    cursor: pointer;
+}
+
+.terms-check label {
+    cursor: pointer;
+}
+
+/* ==================== LOGIN LABEL ==================== */
+.login-label {
+    background: #FF69B4;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 8px 28px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+/* ==================== FORM TITLE ==================== */
+.form-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* ==================== MODAL ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #2D1B4E;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.modal-icon {
+    font-size: 60px;
+    margin-bottom: 16px;
+}
+
+.modal-icon.correct {
+    color: #4CAF50;
+}
+
+.modal-icon.wrong {
+    color: #F44336;
+}
+
+.modal-text {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.btn-modal-ok {
+    background: #FF69B4;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.btn-modal-ok:hover {
+    background: #FF85C8;
+    transform: scale(1.05);
+}
